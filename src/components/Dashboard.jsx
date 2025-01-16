@@ -1,7 +1,9 @@
-import React from "react";
-
+import React, { useRef } from "react";
+import BarChart from "./BarChart";
 
 const Dashboard = () => {
+  const canvasRef = useRef(null);
+
   return (
     <div className="g-sidenav-show  bg-gray-100">
       <aside
@@ -1753,11 +1755,13 @@ const Dashboard = () => {
                 <div className="card-body p-2">
                   <div className="bg-dark border-radius-md py-3 pe-1 mb-3">
                     <div className="chart">
-                      <canvas
+                      {/* <canvas
+                        ref={canvasRef}
                         id="chart-bars"
                         className="chart-canvas"
                         height="170"
-                      ></canvas>
+                      ></canvas> */}
+                      <BarChart canvasRef={canvasRef} />
                     </div>
                   </div>
                   <h6 className="ms-2 mt-4 mb-0"> Active Users </h6>
