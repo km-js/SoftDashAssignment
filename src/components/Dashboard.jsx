@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import BarChart from "./BarChart";
+import LineChart from "./LineChart";
 
 const Dashboard = () => {
   const canvasRef = useRef(null);
+  const lineCanvasRef = useRef(null);
 
   return (
     <div className="g-sidenav-show  bg-gray-100">
@@ -2018,11 +2020,12 @@ const Dashboard = () => {
                 </div>
                 <div className="card-body p-3">
                   <div className="chart">
-                    <canvas
+                    {/* <canvas
                       id="chart-line"
                       className="chart-canvas"
                       height="300"
-                    ></canvas>
+                    ></canvas> */}
+                     <LineChart canvasRef={lineCanvasRef} />
                   </div>
                 </div>
               </div>
