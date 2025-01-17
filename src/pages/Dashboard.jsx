@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import BarChart from "./BarChart";
-import LineChart from "./LineChart";
+import { Link } from "react-router";
+import BarChart from "../components/BarChart";
+import LineChart from "../components/LineChart";
 import {
   fetchActiveUsers,
   fetchPurchases,
   fetchLikes,
   fetchClicks,
 } from "../api/userApi";
+import { Users } from "lucide-react";
 
 const Dashboard = () => {
   const [activeUsers, setActiveUsers] = useState([]);
@@ -112,7 +114,8 @@ const Dashboard = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link  " href="../pages/tables.html">
+              {/* <a className="nav-link  " href="../pages/tables.html"> */}
+              <Link to="/tables" className="nav-link">
                 <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                   <svg
                     width="12px"
@@ -153,7 +156,8 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <span className="nav-link-text ms-1">Tables</span>
-              </a>
+                {/* </a> */}
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link  " href="../pages/billing.html">
@@ -767,7 +771,7 @@ const Dashboard = () => {
                             ></i>
                           </div>
                           <h5 className="text-white font-weight-bolder mb-0 mt-3">
-                            357
+                            {clicks.length}
                           </h5>
                           <span className="text-white text-sm">
                             Click Events
@@ -903,7 +907,7 @@ const Dashboard = () => {
                             ></i>
                           </div>
                           <h5 className="text-white font-weight-bolder mb-0 mt-3">
-                            940
+                            {likes.length}
                           </h5>
                           <span className="text-white text-sm">Likes</span>
                         </div>
@@ -1055,7 +1059,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="row my-4">
+          {/* <div className="row my-4">
             <div className="col-lg-8 col-md-6 mb-md-0 mb-4">
               <div className="card">
                 <div className="card-header pb-0">
@@ -1704,8 +1708,8 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mt-4">
+          </div> */}
+          {/* <div className="row mt-4">
             <div className="col-lg-7 mb-lg-0 mb-4">
               <div className="card">
                 <div className="card-body p-3">
@@ -1783,7 +1787,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row mt-4">
             <div className="col-lg-5 mb-lg-0 mb-4">
               <div className="card z-index-2">
@@ -1850,7 +1854,9 @@ const Dashboard = () => {
                             Users
                           </p>
                         </div>
-                        <h4 className="font-weight-bolder">36K</h4>
+                        <h4 className="font-weight-bolder">
+                          {activeUsers.length}
+                        </h4>
                         <div className="progress w-75">
                           <div
                             className="progress-bar bg-dark w-60"
@@ -1913,7 +1919,7 @@ const Dashboard = () => {
                             Clicks
                           </p>
                         </div>
-                        <h4 className="font-weight-bolder">2m</h4>
+                        <h4 className="font-weight-bolder">{clicks.length}</h4>
                         <div className="progress w-75">
                           <div
                             className="progress-bar bg-dark w-90"
@@ -1967,7 +1973,9 @@ const Dashboard = () => {
                             Sales
                           </p>
                         </div>
-                        <h4 className="font-weight-bolder">435$</h4>
+                        <h4 className="font-weight-bolder">
+                          {purchases.length}
+                        </h4>
                         <div className="progress w-75">
                           <div
                             className="progress-bar bg-dark w-30"
