@@ -1,7 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
+import { fetchActiveUsers } from "../api/userApi";
 
 const BarChart = ({ canvasRef }) => {
+  const [activeUsers, setActiveUsers] = useState([]);
+
+  const salesData = activeUsers.map((user) => user.age * 10).slice(0, 9);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const usersData = await fetchActiveUsers();
+        setActiveUsers(usersData);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    loadData();
+  }, []);
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
 
@@ -30,8 +48,9 @@ const BarChart = ({ canvasRef }) => {
               borderRadius: 4,
               borderSkipped: false,
               backgroundColor: "#fff",
-              data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-              maxBarThickness: 6,
+              data: salesData,
+              //  data: 450, 200, 100, 220, 500, 100, 400, 230, 500],
+              maxBarThikness: 6,
             },
           ],
         },
@@ -87,7 +106,7 @@ const BarChart = ({ canvasRef }) => {
         chartInstance.destroy();
       }
     };
-  }, [canvasRef]);
+  }, [canvasRef, salesData]);
 
   return (
     <div style={{ width: "100%", height: "200px" }}>

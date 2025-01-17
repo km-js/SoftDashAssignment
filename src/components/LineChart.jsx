@@ -1,7 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
+import { fetchActiveUsers } from "../api/userApi";
 
 const LineChart = ({ canvasRef }) => {
+  const [activeUsers, setActiveUsers] = useState([]);
+
+  const mobileData = activeUsers.map((user) => user.age + Math.random()* 30).slice(0, 9);
+  const websiteData = activeUsers.map((user) => user.weight).slice(0, 9);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const usersData = await fetchActiveUsers();
+        setActiveUsers(usersData);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    loadData();
+  }, []);
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
 
@@ -42,7 +61,7 @@ const LineChart = ({ canvasRef }) => {
               borderWidth: 3,
               backgroundColor: gradientStroke1,
               fill: true,
-              data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+              data: mobileData,
               maxBarThickness: 6,
             },
             {
@@ -54,7 +73,7 @@ const LineChart = ({ canvasRef }) => {
               borderWidth: 3,
               backgroundColor: gradientStroke2,
               fill: true,
-              data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+              data: websiteData,
               maxBarThickness: 6,
             },
           ],
@@ -123,7 +142,7 @@ const LineChart = ({ canvasRef }) => {
         chartInstance.destroy();
       }
     };
-  }, [canvasRef]);
+  }, [canvasRef, mobileData, websiteData]);
 
   return (
     <div style={{ width: "100%", height: "300px" }}>

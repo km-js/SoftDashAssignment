@@ -1,10 +1,43 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
+import {
+  fetchActiveUsers,
+  fetchPurchases,
+  fetchLikes,
+  fetchClicks,
+} from "../api/userApi";
 
 const Dashboard = () => {
+  const [activeUsers, setActiveUsers] = useState([]);
+  const [purchases, setPurchases] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [clicks, setClicks] = useState([]);
+
   const canvasRef = useRef(null);
   const lineCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const usersData = await fetchActiveUsers();
+        setActiveUsers(usersData);
+
+        const purchasesData = await fetchPurchases();
+        setPurchases(purchasesData);
+
+        const likesData = await fetchLikes();
+        setLikes(likesData);
+
+        const clicksData = await fetchClicks();
+        setClicks(clicksData);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      }
+    };
+
+    loadData();
+  }, []);
 
   return (
     <div className="g-sidenav-show  bg-gray-100">
@@ -666,7 +699,7 @@ const Dashboard = () => {
                             ></i>
                           </div>
                           <h5 className="text-white font-weight-bolder mb-0 mt-3">
-                            1600
+                            {activeUsers.length}
                           </h5>
                           <span className="text-white text-sm">
                             Users Active
@@ -804,7 +837,7 @@ const Dashboard = () => {
                             ></i>
                           </div>
                           <h5 className="text-white font-weight-bolder mb-0 mt-3">
-                            2300
+                            {purchases.length}
                           </h5>
                           <span className="text-white text-sm">Purchases</span>
                         </div>
@@ -2025,7 +2058,7 @@ const Dashboard = () => {
                       className="chart-canvas"
                       height="300"
                     ></canvas> */}
-                     <LineChart canvasRef={lineCanvasRef} />
+                    <LineChart canvasRef={lineCanvasRef} />
                   </div>
                 </div>
               </div>
